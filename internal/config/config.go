@@ -1,31 +1,63 @@
 package config
 
-import ("os", "encoding/json", "fmt")
+import ("os"
+ "encoding/json"
+  "fmt" 
+  "path/filepath")
 
 type Config struct {
-	current_username string
-	post 
+	Current_username string "json:'username'"
+	Db_url string "json:'url'"
 }
 
-func Read (data byte[]) (map[string]Config, error) {
-	err := json.Unmarshal(data)
+func Read () (Config, error) {
+	var cfg Config
+	fullPath, err := getConfigFilePath()
 	if err != nil {
-		return map[string]Config, fmt.Errorf("Error reading JSON: %v", err)
+		return Config{}, fmt.Errorf("Error retrieving filepath: %v", err)
 	}
-	post := Post&
-
+	data, err := os.ReadFile(fullPath)
+	if err != nil {
+		return Config{}, fmt.Errorf("Error splicing Home directory with json: %v", err)
+	}
+	err = json.Unmarshal(data, &cfg)
+	if err != nil {
+		return Config{}, fmt.Errorf("Error Unmarshalling: %v", err)
+	}
+	return cfg, nil
 }
 
-func SetUser (cfg Config) *Config {
-	err := write(cfg.current_username)
+func SetUser (cfg Config) (Config, error) {
+	err := write(cfg)
+	if err != nil {
+		return Config{}, fmt.Errorf("Error Unmarshalling: %v", err)
+	}
+	return cfg, nil
 }
 
 func getConfigFilePath() (string, error) {
-
+	userHome, err := os.UserHomeDir()
+	if err != nil {
+		return "", fmt.Errorf("Error retrieving Home directory: %v", err)
+	}
+	fullPath := filepath.Join(userHome, configFileName)
+	return fullPath, nil
 }
 
 func write (cfg Config) error {
-	err := 
+	data, err := json.Marshal(cfg)
+	if err != nil {
+		return fmt.Errorf("Error Marshalling: %v", err)
+	}
+	filePath, err := getConfigFilePath()
+	if err != nil {
+		return fmt.Errorf("Error retrieving filepath: %v", err)
+	}
+	err = os.WriteFile(filePath, data, 0600)
+	if err != nil {
+		return fmt.Errorf("Error Writing: %v", err)
+	}
+	return nil
 }
 
 const configFileName = ".gatorconfig.json"
