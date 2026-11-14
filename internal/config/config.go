@@ -6,8 +6,8 @@ import ("os"
   "path/filepath")
 
 type Config struct {
-	Current_username string "json:'username'"
-	Db_url string "json:'url'"
+	CurrentUsername string "json:'username'"
+	DbUrl string "json:'url'"
 }
 
 func Read () (Config, error) {

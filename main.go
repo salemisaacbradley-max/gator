@@ -3,6 +3,10 @@ package main
 import ("fmt"
 	"gator/internal/config")
 
+type state struct {
+	pointer *config.Config
+}
+
 func main () {
 	cfg, err := config.Read()
 	if err != nil {
