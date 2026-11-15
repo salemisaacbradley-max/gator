@@ -1,13 +1,18 @@
 package main
 
 import ("fmt"
-		"errors")
+		"errors"
+		"gator/internal/config")
 
-func handlerLogin(s *state, cmd Command) error {
-	if len(cmd.Args) < 1 {
+func handlerLogin(s *state, cmd command) error {
+	if len(cmd.args) < 1 {
 		return errors.New("Error Username Field was Blank")
 	}
-	s.pointer.CurrentUsername = cmd.Args[0]
+	s.pointer.CurrentUsername = cmd.args[0]
+	_, err := config.SetUser(*s.pointer)
+	if err != nil {
+		return fmt.Errorf("Error setting user: %v", err)
+	}
 	fmt.Println("User has been set")
 	return nil
 }

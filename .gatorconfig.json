@@ -1,1 +1,1 @@
-{"Current_username":"","Db_url":"postgres://example"}
+{"CurrentUsername":"boots","DbUrl":"postgres://josephdaley:@localhost:5432/gator?sslmode=disable"}
