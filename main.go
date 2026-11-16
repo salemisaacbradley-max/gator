@@ -2,10 +2,13 @@ package main
 
 import ("fmt"
 	"gator/internal/config"
-	"os")
+	"os"
+	"database/sql")
+import _ "github.com/lib/pq"
 
 type state struct {
 	pointer *config.Config
+	db *database.Queries
 }
 
 func main () {
@@ -14,7 +17,13 @@ func main () {
 		fmt.Printf("Error reading the Config: %v", err)
 		return
 	}
-	ali := state{pointer: &cfg}
+	datab, err := sql.Open("postgres", cfg.DbURL)
+	if err != nil {
+		fmt.Printf("Error opening postgres: %v", err)
+		os.Exit(1)
+	}
+	newDb := database.New(datab)
+	ali := state{pointer: &cfg, db: newDb}
 	coms := commands{com:make(map[string]func(*state, command) error)}
 	coms.register("login", handlerLogin)
 	if len(os.Args) < 2 {
