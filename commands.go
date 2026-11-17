@@ -5,7 +5,7 @@ import ("fmt"
 
 type command struct {
 	name string
-	args []string
+	Args []string
 
 }
 
@@ -16,7 +16,7 @@ type commands struct {
 func (c *commands) run(s *state, cmd command) error {
 	err := c.com[cmd.name](s, cmd)
 	if err != nil {
-		return fmt.Errorf("Error trying to run %v command: %w", cmd.name, err)
+		return fmt.Errorf("Error trying to run %v command: %w\n", cmd.name, err)
 	}
 	return nil
 }

@@ -14,15 +14,15 @@ func Read () (Config, error) {
 	var cfg Config
 	fullPath, err := getConfigFilePath()
 	if err != nil {
-		return Config{}, fmt.Errorf("Error retrieving filepath: %v", err)
+		return Config{}, fmt.Errorf("Error retrieving filepath: %v\n", err)
 	}
 	data, err := os.ReadFile(fullPath)
 	if err != nil {
-		return Config{}, fmt.Errorf("Error splicing Home directory with json: %v", err)
+		return Config{}, fmt.Errorf("Error splicing Home directory with json: %v\n", err)
 	}
 	err = json.Unmarshal(data, &cfg)
 	if err != nil {
-		return Config{}, fmt.Errorf("Error Unmarshalling: %v", err)
+		return Config{}, fmt.Errorf("Error Unmarshalling: %v\n", err)
 	}
 	return cfg, nil
 }
@@ -30,7 +30,7 @@ func Read () (Config, error) {
 func SetUser (cfg Config) (Config, error) {
 	err := write(cfg)
 	if err != nil {
-		return Config{}, fmt.Errorf("Error Unmarshalling: %v", err)
+		return Config{}, fmt.Errorf("Error Unmarshalling: %v\n", err)
 	}
 	return cfg, nil
 }
@@ -38,7 +38,7 @@ func SetUser (cfg Config) (Config, error) {
 func getConfigFilePath() (string, error) {
 	userHome, err := os.UserHomeDir()
 	if err != nil {
-		return "", fmt.Errorf("Error retrieving Home directory: %v", err)
+		return "", fmt.Errorf("Error retrieving Home directory: %v\n", err)
 	}
 	fullPath := filepath.Join(userHome, configFileName)
 	return fullPath, nil
@@ -47,15 +47,15 @@ func getConfigFilePath() (string, error) {
 func write (cfg Config) error {
 	data, err := json.Marshal(cfg)
 	if err != nil {
-		return fmt.Errorf("Error Marshalling: %v", err)
+		return fmt.Errorf("Error Marshalling: %v\n", err)
 	}
 	filePath, err := getConfigFilePath()
 	if err != nil {
-		return fmt.Errorf("Error retrieving filepath: %v", err)
+		return fmt.Errorf("Error retrieving filepath: %v\n", err)
 	}
 	err = os.WriteFile(filePath, data, 0600)
 	if err != nil {
-		return fmt.Errorf("Error Writing: %v", err)
+		return fmt.Errorf("Error Writing: %v\n", err)
 	}
 	return nil
 }
