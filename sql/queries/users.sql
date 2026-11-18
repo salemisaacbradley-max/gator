@@ -6,4 +6,7 @@ RETURNING *;
 -- name: GetUser :one
 SELECT *
 FROM users
-WHERE ($1);
+WHERE name = $1;
+
+-- name: Reset :exec 
+DELETE FROM users;

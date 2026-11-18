@@ -27,12 +27,10 @@ func main () {
 	ali := state{pointer: &cfg, db: newDb}
 	coms := commands{com:make(map[string]func(*state, command) error)}
 	coms.register("login", handlerLogin)
-	coms.register("register", handlerLogin)
+	coms.register("register", handlerRegister)
+	coms.register("reset", handlerReset)
 	if len(os.Args) < 2 {
 		fmt.Println("Not enough arguments")
-		os.Exit(1)
-	} else if len(os.Args) == 2 {
-		fmt.Println("Username Required")
 		os.Exit(1)
 	} else {
 		orders := command{name: os.Args[1], Args: os.Args[2:]}
