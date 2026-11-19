@@ -55,3 +55,18 @@ func handlerReset(s *state, cmd command) error {
 	}
 	return nil
 }
+
+func handlerUsers(s *state, cmd command) error {
+	users, err := s.db.GetUsers(context.Background())
+	if err != nil {
+		return fmt.Errorf("Error retrieving users: %v", err)
+	}
+	for _, user := range users {
+		if user.Name == s.pointer.CurrentUsername {
+			fmt.Printf("* %s (current)\n", user.Name)
+		} else {
+			fmt.Printf("* %s\n", user.Name)
+		}
+	}
+	return nil
+}
