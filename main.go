@@ -30,6 +30,7 @@ func main () {
 	coms.register("register", handlerRegister)
 	coms.register("reset", handlerReset)
 	coms.register("users", handlerUsers)
+	coms.register("agg", handlerAgg)
 	if len(os.Args) < 2 {
 		fmt.Println("Not enough arguments")
 		os.Exit(1)
