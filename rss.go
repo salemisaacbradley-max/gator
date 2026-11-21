@@ -4,7 +4,7 @@ import ("fmt"
 		"context"
 		"net/http"
 		"io"
-		)
+		"html")
 
 type RSSFeed struct {
 	Channel struct {
@@ -44,6 +44,17 @@ func fetchFeed(ctx context.Context, feedURL string) (*RSSFeed, error) {
 	if err != nil {
 		return nil, fmt.Errorf("Error Unmarshalling: %w", err)
 	}
-	return newFeed, nil
+	loopFeed := RSSFeed{}
+	for _, items := range newFeed.Channel {
+		chTitle := html.UnescapeString(items.Title)
+		chDes := html.UnescapeString(items.Des)
+		chItem := RSSItem{}
+		for _, item := range items {
+			title := html.UnescapeString(items.Title)
+			des := html.UnescapeString(items.Description)
+			chItem = {title, newFeed.Channel.Link, des, newFeed.Channel.Pubdate}
+		}
+	}
+	return loopFeed, nil
 }
 
