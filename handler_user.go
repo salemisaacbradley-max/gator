@@ -72,5 +72,5 @@ func handlerUsers(s *state, cmd command) error {
 }
 
 func handlerAgg(s *state, cmd command) error {
-	MethodGet()
+	data, err := MethodGet("https://www.wagslane.dev/index.xml")
 }
