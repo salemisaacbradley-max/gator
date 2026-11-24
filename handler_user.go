@@ -73,4 +73,7 @@ func handlerUsers(s *state, cmd command) error {
 
 func handlerAgg(s *state, cmd command) error {
 	data, err := MethodGet("https://www.wagslane.dev/index.xml")
+	if err != nil {
+		return fmt.Errorf("Error Getting for Aggregator: %w", err)
+	}
 }
