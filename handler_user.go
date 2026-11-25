@@ -76,4 +76,9 @@ func handlerAgg(s *state, cmd command) error {
 	if err != nil {
 		return fmt.Errorf("Error Getting for Aggregator: %w", err)
 	}
+	feed, err := cmd.FetchFeed(data)
+	if err != nil {
+		return fmt.Errorf("Error Fetching Feed: %w", err)
+	}
+	fmt.Printf()
 }
