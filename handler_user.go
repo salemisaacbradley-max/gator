@@ -80,5 +80,5 @@ func handlerAgg(s *state, cmd command) error {
 	if err != nil {
 		return fmt.Errorf("Error Fetching Feed: %w", err)
 	}
-	fmt.Printf()
+	fmt.Printf(feed)
 }
